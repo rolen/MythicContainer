@@ -138,6 +138,7 @@ func C2RPCStartServer(input c2structs.C2RPCStartServerMessage) c2structs.C2RPCSt
 }
 
 func readStdOutToChan(name string, stdOut *bufio.Scanner) {
+	stdOut.Buffer(make([]byte, 0, 1024*1024), 1024*1024)
 	for stdOut.Scan() {
 		output := stdOut.Text()
 		logging.LogDebug(output)
@@ -149,6 +150,7 @@ func readStdOutToChan(name string, stdOut *bufio.Scanner) {
 	logging.LogDebug("readStdOutToChan exited")
 }
 func readStdErrToChan(name string, stdErr *bufio.Scanner) {
+	stdErr.Buffer(make([]byte, 0, 1024*1024), 1024*1024)
 	for stdErr.Scan() {
 		output := stdErr.Text()
 		logging.LogDebug(output)
